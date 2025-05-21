@@ -63,8 +63,7 @@ public class ScheduleRepository {
         return Optional.empty();
     }
 
-    @Transactional
-    boolean deleteUserById(Long id) {
+    public boolean deleteUserById(Long id) {
         return (scheduleDao.deleteById(id) > 0);
     }
 }

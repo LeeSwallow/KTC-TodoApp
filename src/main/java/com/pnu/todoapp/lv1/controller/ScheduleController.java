@@ -1,6 +1,5 @@
 package com.pnu.todoapp.lv1.controller;
 
-import com.pnu.todoapp.lv1.dao.ScheduleDao;
 import com.pnu.todoapp.lv1.dto.RequestCreateScheduleDto;
 import com.pnu.todoapp.lv1.dto.ResponseScheduleDto;
 import com.pnu.todoapp.lv1.service.ScheduleService;
@@ -9,7 +8,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.net.http.HttpResponse;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -20,19 +18,31 @@ public class ScheduleController {
     private final ScheduleService scheduleService;
 
     @PostMapping
-    public ResponseEntity<ResponseScheduleDto> create(@ModelAttribute RequestCreateScheduleDto requestDto) {
+    public ResponseEntity<ResponseScheduleDto> create(@RequestBody RequestCreateScheduleDto requestDto) {
         ResponseScheduleDto responseDto =  scheduleService.save(requestDto.getContent(), requestDto.getPassword(), requestDto.getUsername());
         return new ResponseEntity<>(responseDto, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<List<ResponseScheduleDto>> get(@RequestParam String username, @RequestParam LocalDate updatedAt) {
+    public ResponseEntity<List<ResponseScheduleDto>> getMany(@RequestParam String username, @RequestParam String updatedAt) {
         if (username == null && updatedAt == null) {
-            List<ResponseScheduleDto> responseDtos = scheduleService.find();
-            return new ResponseEntity<>(responseDtos, HttpStatus.OK);
+            List<ResponseScheduleDto> responseDto = scheduleService.findAll();
+            return new ResponseEntity<>(responseDto, HttpStatus.OK);
         } else if (updatedAt == null) {
-            List<ResponseScheduleDto> responseDtos = scheduleService.findAll();
+            List<ResponseScheduleDto> responseDto = scheduleService.findByUsername(username);
+            return new ResponseEntity<>(responseDto, HttpStatus.OK);
+        } else if (username == null) {
+            List<ResponseScheduleDto> responseDto = scheduleService.findByUpdatedAt(LocalDate.parse(updatedAt));
+            return new ResponseEntity<>(responseDto, HttpStatus.OK);
+        } else {
+            List<ResponseScheduleDto> responseDto = scheduleService.findByUsernameAndUpdatedAt(username, LocalDate.parse(updatedAt));
+            return new ResponseEntity<>(responseDto, HttpStatus.OK);
         }
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ResponseScheduleDto> getSingle(@PathVariable Long id) {
+        ResponseScheduleDto responseDto = scheduleService.findById(id);
+        return new ResponseEntity<>(responseDto, HttpStatus.OK);
+    }
 }
