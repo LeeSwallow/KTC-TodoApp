@@ -51,12 +51,4 @@ public class ScheduleRepository {
                     schedule.getUsername().equals(username) && schedule.getUpdatedAt().equals(updatedAt)
                 ).toList();
     }
-
-    @Transactional
-    public Optional<Schedule> updateContentById(Long id, String content) {
-        if (scheduleDao.updateContentById(id, content) > 0) {
-            return Optional.ofNullable(scheduleDao.findById(id));
-        }
-        return Optional.empty();
-    }
 }
