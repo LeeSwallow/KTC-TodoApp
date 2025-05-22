@@ -1,4 +1,4 @@
-package com.pnu.todoapp.Lv1.entity;
+package com.pnu.todoapp.Lv2.entity;
 
 import lombok.Getter;
 import lombok.Setter;

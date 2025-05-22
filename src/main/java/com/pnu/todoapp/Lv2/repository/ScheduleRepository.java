@@ -1,7 +1,7 @@
-package com.pnu.todoapp.Lv1.repository;
+package com.pnu.todoapp.Lv2.repository;
 
-import com.pnu.todoapp.Lv1.dao.ScheduleDao;
-import com.pnu.todoapp.Lv1.entity.Schedule;
+import com.pnu.todoapp.Lv2.dao.ScheduleDao;
+import com.pnu.todoapp.Lv2.entity.Schedule;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,8 +48,7 @@ public class ScheduleRepository {
     public List<Schedule> findByUsernameAndUpdatedAt(String username, LocalDate updatedAt) {
         return scheduleDao.findAll().stream()
                 .filter(schedule ->
-                    schedule.getUsername().equals(username) && schedule.getUpdatedAt().equals(updatedAt)
-                ).toList();
+                    schedule.getUsername().equals(username) && schedule.getUpdatedAt().equals(updatedAt)).toList();
     }
 
     @Transactional
@@ -58,5 +57,18 @@ public class ScheduleRepository {
             return Optional.ofNullable(scheduleDao.findById(id));
         }
         return Optional.empty();
+    }
+
+
+    @Transactional
+    public Optional<Schedule> updateUsernameById(Long id, String username) {
+        if (scheduleDao.updateUsernameById(id, username) > 0) {
+            return Optional.ofNullable(scheduleDao.findById(id));
+        }
+        return Optional.empty();
+    }
+
+    public boolean deleteUserById(Long id) {
+        return (scheduleDao.deleteById(id) > 0);
     }
 }

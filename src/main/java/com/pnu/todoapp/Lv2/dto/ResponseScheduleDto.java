@@ -1,6 +1,6 @@
-package com.pnu.todoapp.Lv1.dto;
+package com.pnu.todoapp.Lv2.dto;
 
-import com.pnu.todoapp.Lv1.entity.Schedule;
+import com.pnu.todoapp.Lv2.entity.Schedule;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
