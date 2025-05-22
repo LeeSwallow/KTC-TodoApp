@@ -1,11 +1,12 @@
-package com.pnu.todoapp.lv1.repository;
+package com.pnu.todoapp.Lv1.repository;
 
-import com.pnu.todoapp.lv1.dao.ScheduleDao;
-import com.pnu.todoapp.lv1.entity.Schedule;
+import com.pnu.todoapp.Lv1.dao.ScheduleDao;
+import com.pnu.todoapp.Lv1.entity.Schedule;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
@@ -33,17 +34,23 @@ public class ScheduleRepository {
     }
 
     public List<Schedule> findByUsername(String username) {
-        return scheduleDao.findByUsername(username).stream()
+        return scheduleDao.findAll().stream()
+                .filter(schedule -> schedule.getUsername().equals(username))
                 .sorted(Comparator.comparing(Schedule::getUpdatedAt).reversed())
                 .toList();
     }
 
-    public List<Schedule> findByUpdatedAt(Date updatedAt) {
-        return scheduleDao.findByUpdatedAt(updatedAt);
+    public List<Schedule> findByUpdatedAt(LocalDate updatedAt) {
+        return scheduleDao.findAll().stream()
+                .filter(schedule -> schedule.getUpdatedAt().equals(updatedAt))
+                .toList(); //  update date를 조회하므로 sort 해줄 필요 없음
     }
 
-    public List<Schedule> findByUsernameAndUpdatedAt(String username, Date updatedAt) {
-        return scheduleDao.findByUserNameAndUpdatedAt(username, updatedAt);
+    public List<Schedule> findByUsernameAndUpdatedAt(String username, LocalDate updatedAt) {
+        return scheduleDao.findAll().stream()
+                .filter(schedule -> {
+                    return schedule.getUsername().equals(username) && schedule.getUpdatedAt().equals(updatedAt);
+                }).toList();
     }
 
     @Transactional

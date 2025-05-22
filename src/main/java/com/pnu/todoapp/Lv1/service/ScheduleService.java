@@ -1,8 +1,8 @@
-package com.pnu.todoapp.lv1.service;
+package com.pnu.todoapp.Lv1.service;
 
-import com.pnu.todoapp.lv1.dto.ResponseScheduleDto;
-import com.pnu.todoapp.lv1.entity.Schedule;
-import com.pnu.todoapp.lv1.repository.ScheduleRepository;
+import com.pnu.todoapp.Lv1.dto.ResponseScheduleDto;
+import com.pnu.todoapp.Lv1.entity.Schedule;
+import com.pnu.todoapp.Lv1.repository.ScheduleRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -47,8 +47,7 @@ public class ScheduleService {
 
     public List<ResponseScheduleDto> findByUpdatedAt(LocalDate updatedAt) {
         if (updatedAt == null) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "업데이트 날짜를 입력해주세요.");
-        Date date = new Date(updatedAt.toEpochDay());
-        List<Schedule> schedules = scheduleRepository.findByUpdatedAt(date);
+        List<Schedule> schedules = scheduleRepository.findByUpdatedAt(updatedAt);
         return schedules.stream().map(ResponseScheduleDto::new).toList();
     }
 
@@ -56,8 +55,7 @@ public class ScheduleService {
         if (username == null || updatedAt == null) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "사용자 이름과 업데이트 날짜를 모두 입력해주세요.");
         }
-        Date date = new Date(updatedAt.toEpochDay());
-        List<Schedule> schedules = scheduleRepository.findByUsernameAndUpdatedAt(username, date);
+        List<Schedule> schedules = scheduleRepository.findByUsernameAndUpdatedAt(username, updatedAt);
         return schedules.stream().map(ResponseScheduleDto::new).toList();
     }
 

@@ -1,13 +1,13 @@
-package com.pnu.todoapp.lv1;
+package com.pnu.todoapp.Lv1;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TodoAppApplication {
+public class TodoAppApplicationLv1 {
 
     public static void main(String[] args) {
-        SpringApplication.run(TodoAppApplication.class, args);
+        SpringApplication.run(TodoAppApplicationLv1.class, args);
     }
 
 }

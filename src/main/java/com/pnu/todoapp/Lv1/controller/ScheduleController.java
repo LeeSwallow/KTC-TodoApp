@@ -1,8 +1,8 @@
-package com.pnu.todoapp.lv1.controller;
+package com.pnu.todoapp.Lv1.controller;
 
-import com.pnu.todoapp.lv1.dto.RequestCreateScheduleDto;
-import com.pnu.todoapp.lv1.dto.ResponseScheduleDto;
-import com.pnu.todoapp.lv1.service.ScheduleService;
+import com.pnu.todoapp.Lv1.dto.RequestCreateScheduleDto;
+import com.pnu.todoapp.Lv1.dto.ResponseScheduleDto;
+import com.pnu.todoapp.Lv1.service.ScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +24,7 @@ public class ScheduleController {
     }
 
     @GetMapping
-    public ResponseEntity<List<ResponseScheduleDto>> getMany(@RequestParam String username, @RequestParam String updatedAt) {
+    public ResponseEntity<List<ResponseScheduleDto>> getMany(@RequestParam(required = false) String username, @RequestParam(required = false) String updatedAt) {
         if (username == null && updatedAt == null) {
             List<ResponseScheduleDto> responseDto = scheduleService.findAll();
             return new ResponseEntity<>(responseDto, HttpStatus.OK);

@@ -1,4 +1,4 @@
-package com.pnu.todoapp.lv1.dto;
+package com.pnu.todoapp.Lv1.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

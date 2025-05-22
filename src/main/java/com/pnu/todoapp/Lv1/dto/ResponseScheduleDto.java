@@ -1,10 +1,11 @@
-package com.pnu.todoapp.lv1.dto;
+package com.pnu.todoapp.Lv1.dto;
 
-import com.pnu.todoapp.lv1.entity.Schedule;
+import com.pnu.todoapp.Lv1.entity.Schedule;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Getter
@@ -13,12 +14,14 @@ import java.util.Date;
 public class ResponseScheduleDto {
     private Long id;
     private String content;
-    private Date createdAt;
-    private Date updatedAt;
+    private String username;
+    private LocalDate createdAt;
+    private LocalDate updatedAt;
 
     public ResponseScheduleDto(Schedule schedule) {
         this.id = schedule.getId();
         this.content = schedule.getContent();
+        this.username = schedule.getUsername();
         this.createdAt = schedule.getCreatedAt();
         this.updatedAt = schedule.getUpdatedAt();
     }

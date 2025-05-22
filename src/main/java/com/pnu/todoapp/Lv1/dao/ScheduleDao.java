@@ -1,19 +1,19 @@
-package com.pnu.todoapp.lv1.dao;
+package com.pnu.todoapp.Lv1.dao;
 
-import com.pnu.todoapp.lv1.entity.Schedule;
+import com.pnu.todoapp.Lv1.entity.Schedule;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.SQLException;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class ScheduleDao {
@@ -26,30 +26,19 @@ public class ScheduleDao {
             schedule.setId(rs.getLong("id"));
             schedule.setContent(rs.getString("content"));
             schedule.setUsername(rs.getString("username"));
-            schedule.setCreatedAt(new Date(rs.getDate("created_at").getTime()));
-            schedule.setUpdatedAt(new Date(rs.getDate("updated_at").getTime()));
+            schedule.setCreatedAt(rs.getDate("created_at").toLocalDate());
+            schedule.setUpdatedAt(rs.getDate("updated_at").toLocalDate());
             return schedule;
         });
     }
 
     public Schedule findById(Long id) {
-        return jdbcTemplate.queryForObject("SELECT * FROM schedule WHERE id = ?", scheduleRowMapper(), id);
+        List<Schedule> schedules = jdbcTemplate.query("SELECT * FROM schedule WHERE id = ?", scheduleRowMapper(), id);
+        return schedules.isEmpty() ? null : schedules.get(0);
     }
 
     public List<Schedule> findAll() {
         return jdbcTemplate.query("SELECT * FROM schedule", scheduleRowMapper());
-    }
-
-    public List<Schedule> findByUsername(String username) {
-        return jdbcTemplate.query("SELECT * FROM schedule WHERE username = ?", scheduleRowMapper(), username);
-    }
-
-    public List<Schedule> findByUpdatedAt(Date date) {
-        return jdbcTemplate.query("SELECT * FROM schedule WHERE updated_at = ?", scheduleRowMapper(), date);
-    }
-
-    public List<Schedule> findByUserNameAndUpdatedAt(String username, Date date) {
-        return jdbcTemplate.query("SELECT * FROM schedule WHERE username = ? AND updated_at = ?", scheduleRowMapper(), username, date);
     }
 
     public int updateContentById(Long id, String content) {
@@ -58,31 +47,31 @@ public class ScheduleDao {
     }
 
     public int updateUsernameById(Long id, String username) {
-        Date today = new Date();
+        Date today = new Date(System.currentTimeMillis());
         return jdbcTemplate.update("UPDATE schedule SET username = ? , updated_at = ? WHERE id = ?", username, today, id);
     }
+
     public int deleteById(Long id) {
-        return jdbcTemplate.update("DELETE schedule WHERE id = ?", id);
+        return jdbcTemplate.update("DELETE FROM schedule WHERE id = ?", id);
     }
 
     public Long save(String content, String password, String username) {
         String query = "INSERT INTO schedule(content, password, username, created_at, updated_at) VALUES (?, ?, ?, ?, ? )";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         java.sql.Date today = new java.sql.Date(System.currentTimeMillis());
-        PreparedStatementCreator preparedStatementCreator = new PreparedStatementCreator() {
-            @Override
-            public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
-                PreparedStatement pstmt =  con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
-                pstmt.setString(1, content);
-                pstmt.setString(2, password);
-                pstmt.setString(3, username);
-                pstmt.setDate(4, today);
-                pstmt.setDate(5, today);
-                return pstmt;
-            }
+
+        PreparedStatementCreator preparedStatementCreator = con -> {
+            PreparedStatement pstmt =  con.prepareStatement(query, PreparedStatement.RETURN_GENERATED_KEYS);
+            pstmt.setString(1, content);
+            pstmt.setString(2, password);
+            pstmt.setString(3, username);
+            pstmt.setDate(4, today);
+            pstmt.setDate(5, today);
+            return pstmt;
         };
+
         int rowCount = jdbcTemplate.update(preparedStatementCreator, keyHolder);
-        if (rowCount > 0) return keyHolder.getKey().longValue();
+        if (rowCount > 0) return ((Number)keyHolder.getKeyList().get(0).get("id")).longValue();
         else return -1L;
     }
 

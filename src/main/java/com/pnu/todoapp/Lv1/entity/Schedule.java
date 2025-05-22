@@ -1,7 +1,9 @@
-package com.pnu.todoapp.lv1.entity;
+package com.pnu.todoapp.Lv1.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+
+import java.time.LocalDate;
 import java.util.Date;
 
 
@@ -12,6 +14,6 @@ public class Schedule {
     String content;
     String username;
     String password;
-    Date createdAt;
-    Date updatedAt;
+    LocalDate createdAt;
+    LocalDate updatedAt;
 }
