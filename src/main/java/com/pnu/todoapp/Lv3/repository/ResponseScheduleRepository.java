@@ -60,7 +60,6 @@ public class ResponseScheduleRepository {
         return Optional.empty();
     }
 
-
     @Transactional
     public Optional<ResponseScheduleDto> updateUsernameById(Long id, String username) {
         Schedule schedule = scheduleDao.findById(id);

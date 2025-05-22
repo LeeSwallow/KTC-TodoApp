@@ -4,9 +4,7 @@ import com.pnu.todoapp.Lv3.entity.User;
 import com.pnu.todoapp.Lv3.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
@@ -34,7 +32,7 @@ public class UserService {
     }
 
     public User update(Long id, String name) {
-        Optional<User> updated = userRepository.findById(id);
+        Optional<User> updated = userRepository.updateNameById(id, name);
         if (updated.isEmpty()) throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "해당 id의 사용자를 찾을 수 없습니다.");
         return updated.get();
     }

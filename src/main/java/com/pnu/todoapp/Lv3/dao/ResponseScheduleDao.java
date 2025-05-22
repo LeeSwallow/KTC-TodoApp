@@ -18,10 +18,10 @@ public class ResponseScheduleDao {
         return (rs, rowNum) -> {
             ResponseScheduleDto response = new ResponseScheduleDto();
             response.setId(rs.getLong("id"));
-            response.setUsername(rs.getString("username"));
+            response.setUsername(rs.getString("name"));
             response.setContent(rs.getString("content"));
-            response.setCreatedAt(response.getCreatedAt());
-            response.setUpdatedAt(response.getUpdatedAt());
+            response.setCreatedAt(rs.getDate("created_at").toLocalDate());
+            response.setUpdatedAt(rs.getDate("updated_at").toLocalDate());
             return response;
         };
     }

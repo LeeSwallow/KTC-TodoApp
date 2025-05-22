@@ -18,16 +18,3 @@ CREATE TABLE IF NOT EXISTS schedules (
     updated_at DATE,
     CONSTRAINT sch_user_fk FOREIGN KEY(user_id) REFERENCES users(id) ON DELETE SET NULL
 );
-
--- 동명인 집어넣기
-insert into users(name, email, created_at, updated_at)  values (
-    'test',
-    'test1@test.com',
-    CURRENT_DATE,
-    CURRENT_DATE
-), (
-    'test',
-    'test2@test.com',
-    CURRENT_DATE,
-    CURRENT_DATE
-);

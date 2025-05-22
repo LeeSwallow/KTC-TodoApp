@@ -9,10 +9,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.List;
 
 @Repository
@@ -48,21 +45,25 @@ public class UserDao {
     }
 
     public Long save(String email, String name) {
+        Date today = new Date(System.currentTimeMillis());
         PreparedStatementCreator psc= new PreparedStatementCreator() {
             @Override
             public PreparedStatement createPreparedStatement(Connection con) throws SQLException {
                 PreparedStatement preparedStatement= con.prepareStatement(
-                        "INSERT INTO users(email, name, created_at, updated_at) VALUES(?, ?, ?, ?)"
+                        "INSERT INTO users(email, name, created_at, updated_at) VALUES(?, ?, ?, ?)",
+                        Statement.RETURN_GENERATED_KEYS
                 );
                 preparedStatement.setString(1, email);
                 preparedStatement.setString(2, name);
+                preparedStatement.setDate(3, today);
+                preparedStatement.setDate(4, today);
                 return preparedStatement;
             }
         };
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowCount = jdbcTemplate.update(psc, keyHolder);
         if (rowCount <= 0) return null;
-        return ((Number)keyHolder.getKeyList().get(0)).longValue();
+        return ((Number)keyHolder.getKeyList().get(0).get("id")).longValue();
     }
 
 

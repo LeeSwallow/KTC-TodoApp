@@ -51,7 +51,6 @@ public class ScheduleDao {
 
     public Long save(String content, String password, Long userId) {
         String query = "INSERT INTO schedules(content, password, user_id, created_at, updated_at) VALUES (?, ?, ?, ?, ? )";
-        KeyHolder keyHolder = new GeneratedKeyHolder();
         Date today = new Date(System.currentTimeMillis());
 
         PreparedStatementCreator preparedStatementCreator = con -> {
@@ -63,9 +62,11 @@ public class ScheduleDao {
             pstmt.setDate(5, today);
             return pstmt;
         };
+        KeyHolder keyHolder = new GeneratedKeyHolder();
+
         int rowCount = jdbcTemplate.update(preparedStatementCreator, keyHolder);
         if (rowCount > 0) return ((Number)keyHolder.getKeyList().get(0).get("id")).longValue();
-        else return -1L;
+        else return null;
     }
 
 }

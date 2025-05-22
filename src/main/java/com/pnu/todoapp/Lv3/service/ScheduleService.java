@@ -68,11 +68,11 @@ public class ScheduleService {
         authenticatePassword(id, password);
         Optional<ResponseScheduleDto> updatedSchedule = Optional.empty();
 
-        if (content != null) {
+        if (username != null) {
             updatedSchedule = responseScheduleRepository.updateUsernameById(id, username);
             if (updatedSchedule.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "일정 내용 수정에 실패했습니다!");
         }
-        if (username != null) {
+        if (content != null) {
             updatedSchedule = responseScheduleRepository.updateContentById(id, content);
             if (updatedSchedule.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND, "사용자 이름 수정에 실패했습니다!");
         }
