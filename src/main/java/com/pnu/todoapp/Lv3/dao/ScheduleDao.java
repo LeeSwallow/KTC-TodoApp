@@ -65,7 +65,7 @@ public class ScheduleDao {
         KeyHolder keyHolder = new GeneratedKeyHolder();
 
         int rowCount = jdbcTemplate.update(preparedStatementCreator, keyHolder);
-        if (rowCount > 0) return ((Number)keyHolder.getKeyList().get(0).get("id")).longValue();
+        if (rowCount > 0) return ((Number)keyHolder.getKeyList().get(0).get("GENERATED_KEY")).longValue();
         else return null;
     }
 

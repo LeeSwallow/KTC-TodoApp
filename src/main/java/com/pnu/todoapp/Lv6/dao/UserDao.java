@@ -63,7 +63,8 @@ public class UserDao {
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowCount = jdbcTemplate.update(psc, keyHolder);
         if (rowCount <= 0) return null;
-        return ((Number)keyHolder.getKeyList().get(0).get("id")).longValue();
+        System.out.println(keyHolder.getKeyList().get(0));
+        return ((Number)keyHolder.getKeyList().get(0).get("GENERATED_KEY")).longValue();
     }
 
 
