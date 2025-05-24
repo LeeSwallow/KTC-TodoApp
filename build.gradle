@@ -23,6 +23,15 @@ repositories {
     mavenCentral()
 }
 
+springBoot {
+//    mainClass="com.pnu.todoapp.Lv1.TodoAppApplicationLv1"
+//    mainClass="com.pnu.todoapp.Lv2.TodoAppApplicationLv2"
+//    mainClass="com.pnu.todoapp.Lv3.TodoAppApplicationLv3"
+//    mainClass="com.pnu.todoapp.Lv4.TodoAppApplicationLv4"
+//    mainClass="com.pnu.todoapp.Lv5.TodoAppApplicationLv5"
+    mainClass="com.pnu.todoapp.Lv6.TodoAppApplicationLv6"
+}
+
 dependencies {
     // postgres driver
 //    runtimeOnly 'org.postgresql:postgresql'

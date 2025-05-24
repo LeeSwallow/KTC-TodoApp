@@ -1,5 +1,7 @@
 package com.pnu.todoapp.Lv5.dto;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

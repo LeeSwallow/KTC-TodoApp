@@ -29,8 +29,8 @@ public class ResponseScheduleDao {
     public List<ResponseScheduleDto> findAll(Integer offset, Integer limit) {
         String sql = "SELECT sch.id, u.name, sch.content, sch.created_at, sch.updated_at ";
         sql += "from schedules sch JOIN users u ON sch.user_id = u.id ";
-        sql += "order by sch.updated_at desc, sch.id  offset ? limit ?";
-        return jdbcTemplate.query(sql, responseScheduleRowMapper(), offset, limit);
+        sql += "order by sch.updated_at desc, sch.id  limit ? offset ?";
+        return jdbcTemplate.query(sql, responseScheduleRowMapper(), limit, offset);
     }
 
     public ResponseScheduleDto findById(Long id) {
@@ -42,22 +42,22 @@ public class ResponseScheduleDao {
     public List<ResponseScheduleDto> findByUsername(String username, Integer offset, Integer limit) {
         String sql = "SELECT sch.id, u.name, sch.content, sch.created_at, sch.updated_at from schedules sch JOIN users u ON sch.user_id = u.id";
         sql += " WHERE u.name = ?";
-        sql += "order by sch.updated_at desc, sch.id  offset ? limit ?";
-        return jdbcTemplate.query(sql, responseScheduleRowMapper(), username, offset, limit);
+        sql += "order by sch.updated_at desc, sch.id  limit ? offset ?";
+        return jdbcTemplate.query(sql, responseScheduleRowMapper(), username, limit, offset);
     }
 
     public List<ResponseScheduleDto> findByUpdatedAt(LocalDate updatedAt, Integer offset, Integer limit) {
         String sql = "SELECT sch.id, u.name, sch.content, sch.created_at, sch.updated_at from schedules sch JOIN users u ON sch.user_id = u.id";
         sql += " WHERE sch.updated_at = ?";
-        sql += "order by sch.updated_at desc, sch.id  offset ? limit ?";
-        return jdbcTemplate.query(sql, responseScheduleRowMapper(), Date.valueOf(updatedAt), offset, limit);
+        sql += "order by sch.updated_at desc, sch.id  limit ? offset ?";
+        return jdbcTemplate.query(sql, responseScheduleRowMapper(), Date.valueOf(updatedAt), limit, offset);
     }
 
     public List<ResponseScheduleDto> findByUsernameAndUpdatedAt(String username, LocalDate updatedAt, Integer offset, Integer limit) {
         String sql = "SELECT sch.id, u.name, sch.content, sch.created_at, sch.updated_at from schedules sch JOIN users u ON sch.user_id = u.id";
         sql += " WHERE u.name = ?";
         sql += " AND sch.updated_at = ?";
-        sql += "order by sch.updated_at desc, sch.id  offset ? limit ?";
-        return jdbcTemplate.query(sql, responseScheduleRowMapper(), username, updatedAt, offset, limit);
+        sql += "order by sch.updated_at desc, sch.id  limit ? offset ?";
+        return jdbcTemplate.query(sql, responseScheduleRowMapper(), username, updatedAt, limit, offset);
     }
 }
