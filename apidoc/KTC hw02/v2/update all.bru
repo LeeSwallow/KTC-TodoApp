@@ -1,0 +1,19 @@
+meta {
+  name: update all
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{baseurl}}/api/schedules/9
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "password":"test",
+    "content" : "updated content(2)",
+    "username": "min(2)"
+  }
+}

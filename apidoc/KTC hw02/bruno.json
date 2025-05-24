@@ -1,0 +1,9 @@
+{
+  "version": "1",
+  "name": "KTC hw02",
+  "type": "collection",
+  "ignore": [
+    "node_modules",
+    ".git"
+  ]
+}

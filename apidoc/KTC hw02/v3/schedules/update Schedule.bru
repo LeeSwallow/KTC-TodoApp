@@ -1,0 +1,19 @@
+meta {
+  name: update Schedule
+  type: http
+  seq: 7
+}
+
+put {
+  url: {{baseurl}}/api/schedules/1
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "content" : "updated",
+    "password" : "test",
+    "username" : "namer"
+  }
+}

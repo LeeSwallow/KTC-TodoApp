@@ -1,0 +1,15 @@
+meta {
+  name: Get By UpdatedAT
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseurl}}/api/schedules?updatedAt=2025-05-22
+  body: none
+  auth: inherit
+}
+
+params:query {
+  updatedAt: 2025-05-22
+}

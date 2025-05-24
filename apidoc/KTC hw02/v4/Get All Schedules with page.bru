@@ -1,0 +1,16 @@
+meta {
+  name: Get All Schedules with page
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseurl}}/api/schedules?page=3&size=11
+  body: none
+  auth: inherit
+}
+
+params:query {
+  page: 3
+  size: 11
+}

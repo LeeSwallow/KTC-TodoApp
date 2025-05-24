@@ -1,0 +1,17 @@
+meta {
+  name: Delete
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{baseurl}}/api/schedules/24
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "password":"test"
+  }
+}

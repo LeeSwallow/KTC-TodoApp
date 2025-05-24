@@ -1,0 +1,15 @@
+meta {
+  name: get by username
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseurl}}/api/schedules?username=testuser
+  body: none
+  auth: inherit
+}
+
+params:query {
+  username: testuser
+}
